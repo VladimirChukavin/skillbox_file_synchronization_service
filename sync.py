@@ -2,7 +2,6 @@ import os
 
 from datetime import datetime, timezone
 from typing import Any
-from logging import Logger
 
 
 def _get_local_files_info(local_path: str) -> dict[str, float]:
@@ -20,10 +19,10 @@ def _handle_remote_only_files(
     connector: Any,
     remote_info: dict[str, str],
     local_info: dict[str, float],
-    logger: Logger,
+    logger,
 ) -> None:
     for filename in remote_info:
-        if filename not in local_info:
+        if filename in local_info:
             continue
         try:
             connector.delete(filename)
@@ -37,7 +36,7 @@ def _handle_local_files(
     local_path: str,
     remote_info: dict[str, str],
     local_info: dict[str, float],
-    logger: Logger,
+    logger,
 ) -> None:
     for filename, local_mtime in local_info.items():
         full_path = os.path.join(local_path, filename)
@@ -49,7 +48,7 @@ def _handle_local_files(
                 _reupload_file(connector, full_path, logger)
 
 
-def _upload_file(connector: Any, filepath: str, logger: Logger) -> None:
+def _upload_file(connector: Any, filepath: str, logger) -> None:
     try:
         connector.load(filepath)
         logger.info(f"Загружен в облако: {os.path.basename(filepath)}")
@@ -57,7 +56,7 @@ def _upload_file(connector: Any, filepath: str, logger: Logger) -> None:
         logger.error(f"Ошибка загрузки {filepath}: {e}")
 
 
-def _reupload_file(connector: Any, filepath: str, logger: Logger) -> None:
+def _reupload_file(connector: Any, filepath: str, logger) -> None:
     try:
         connector.load(filepath)
         logger.info(f"Перезаписан в облако: {os.path.basename(filepath)}")
@@ -74,7 +73,7 @@ def _is_local_newer(local_mtime: float, remote_iso: str) -> bool:
 def sync_files(
     connector: Any,
     local_path: str,
-    logger: Logger,
+    logger,
 ) -> None:
     try:
         remote_info = connector.get_info()
