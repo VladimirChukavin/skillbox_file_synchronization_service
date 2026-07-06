@@ -3,7 +3,7 @@ import sys
 import time
 
 from dotenv import dotenv_values
-from loguru import Logger, logger as loguru_logger
+from loguru import logger as loguru_logger
 
 from sync import sync_files
 from yandex_disk import YandexDiskConnector
@@ -32,6 +32,7 @@ def _validate_config(config: dict[str, str | None]) -> dict[str, str]:
 def _validate_local_folder(folder_path: str) -> None:
     if not os.path.isdir(folder_path):
         print(f'Ошибка: папка "{folder_path}" не существует.')
+        sys.exit(1)
 
 
 def _validate_token(config: dict[str, str]) -> None:
@@ -43,7 +44,7 @@ def _validate_token(config: dict[str, str]) -> None:
     try:
         connector.get_info()
     except Exception as e:
-        print("Ошибка: недействительный токен доступа к Яндекс Диск.")
+        print(f"Ошибка: недействительный токен доступа к Яндекс Диск.\n {e}")
         sys.exit(1)
 
 
@@ -56,7 +57,7 @@ def setup_config() -> dict[str, str]:
     return config
 
 
-def setup_logger(log_file_path: str) -> Logger:
+def setup_logger(log_file_path: str):
     loguru_logger.remove()
     loguru_logger.add(
         log_file_path,
