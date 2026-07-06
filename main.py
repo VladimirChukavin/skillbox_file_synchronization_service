@@ -1,7 +1,6 @@
 import os
 import sys
 import time
-from typing import Any
 
 from dotenv import dotenv_values
 from loguru import Logger, logger as loguru_logger
