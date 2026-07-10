@@ -18,5 +18,7 @@ def delete_remote_files(
         try:
             connector.delete(filename)
             logger.info(f"Удален из облака: {filename}")
+            print(f"Удален из облака: {filename}")
         except Exception as e:
             logger.error(f"Ошибка удаления {filename}: {e}")
+            print(f"Ошибка удаления {filename}: {e}")
