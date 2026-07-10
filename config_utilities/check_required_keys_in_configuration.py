@@ -25,7 +25,7 @@ def validate_keys_in_config(config: dict[str, str | None]) -> dict[str, str]:
 
     if missing:
         print(
-            f"Ошибка в файле .env не заданы обязательные параметры: "
+            f"Ошибка: файл .env отсутствует или не заданы обязательные параметры: "
             f"{', '.join(missing)}.\n"
         )
         sys.exit(1)
