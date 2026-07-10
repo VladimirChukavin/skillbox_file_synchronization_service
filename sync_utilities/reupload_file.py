@@ -10,7 +10,7 @@ def reupload_file(connector, filepath: str, logger) -> None:
         logger: Настроенный объект логгера.
     """
     try:
-        connector.load(filepath)
+        connector.reload(filepath)
         logger.info(f"Перезаписан в облако: {os.path.basename(filepath)}")
     except Exception as e:
         logger.error(f"Ошибка перезаписи {filepath}: {e}")
