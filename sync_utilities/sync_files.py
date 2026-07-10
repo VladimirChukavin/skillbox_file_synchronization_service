@@ -22,12 +22,14 @@ def sync_files(
         remote_info = connector.get_info()
     except Exception as e:
         logger.error(f"Ошибка получения информации из облака: {e}")
+        print(f"Ошибка получения информации из облака: {e}")
         return
 
     try:
         local_info = get_local_files_info(local_path)
     except Exception as e:
         logger.error(f"Ошибка получения информации о файлах в локальном хранилище: {e}")
+        print(f"Ошибка получения информации о файлах в локальном хранилище: {e}")
         return
 
     delete_remote_files(connector, remote_info, local_info, logger)
