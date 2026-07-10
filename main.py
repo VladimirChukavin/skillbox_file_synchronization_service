@@ -20,6 +20,9 @@ def main() -> None:
 
     logger.info("Запуск приложения")
     logger.info(f"Синхронизируемая папка: {config['SYNC_FOLDER_PATH']}")
+    print("Запуск приложения")
+    print(f"Синхронизируемая папка: {config['SYNC_FOLDER_PATH']}")
+    print("-" * 100)
 
     connector = YandexDiskConnector(
         token=config["YANDEX_TOKEN"],
@@ -36,6 +39,8 @@ def main() -> None:
             sync_files(connector, config["SYNC_FOLDER_PATH"], logger)
     except KeyboardInterrupt:
         logger.info("Завершение работы приложения")
+        print("-" * 100)
+        print("Завершение работы приложения")
 
 
 if __name__ == "__main__":
