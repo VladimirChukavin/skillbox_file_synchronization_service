@@ -12,5 +12,5 @@ def reupload_file(connector, filepath: str, logger) -> None:
     try:
         connector.reload(filepath)
         logger.info(f"Перезаписан в облако: {os.path.basename(filepath)}")
-    except Exception as e:
+    except FileNotFoundError as e:
         logger.error(f"Ошибка перезаписи {filepath}: {e}")
