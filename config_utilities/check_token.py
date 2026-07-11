@@ -1,15 +1,18 @@
 import sys
 
+from requests import exceptions
+
 from connecting_storage.yandex_disk_connecting import YandexDiskConnector
 
 
-def validate_token(config: dict[str, str]) -> None:
+def validate_token(config: dict[str, str], logger) -> None:
     """Проверяет валидность токена доступа к Яндекс Диск.
 
     Выполняет тестовый запрос к API для проверки токена.
 
     Args:
         config: Словарь с настройками конфигурации.
+        logger: Настроенный объект логгера.
 
     Raises:
         SystemExit: Если токен недействителен.
@@ -21,6 +24,6 @@ def validate_token(config: dict[str, str]) -> None:
 
     try:
         connector.get_info()
-    except Exception as e:
-        print(f"Ошибка: недействительный токен доступа к Яндекс Диск.\n {e}")
+    except exceptions.HTTPError as e:
+        logger.error(f"Ошибка: недействительный токен доступа к Яндекс Диск.\n {e}")
         sys.exit(1)
