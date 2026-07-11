@@ -12,7 +12,5 @@ def upload_file(connector, filepath: str, logger) -> None:
     try:
         connector.load(filepath)
         logger.info(f"Загружен в облако: {os.path.basename(filepath)}")
-        print(f"Загружен в облако: {os.path.basename(filepath)}")
     except Exception as e:
         logger.error(f"Ошибка загрузки {filepath}: {e}")
-        print(f"Ошибка загрузки {filepath}: {e}")
