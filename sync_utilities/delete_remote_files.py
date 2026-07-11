@@ -1,3 +1,6 @@
+from requests import exceptions
+
+
 def delete_remote_files(
     connector,
     remote_info: dict[str, str],
@@ -18,5 +21,5 @@ def delete_remote_files(
         try:
             connector.delete(filename)
             logger.info(f"Удален из облака: {filename}")
-        except Exception as e:
+        except exceptions.HTTPError as e:
             logger.error(f"Ошибка удаления {filename}: {e}")
