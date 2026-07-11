@@ -1,3 +1,5 @@
+from requests import exceptions
+
 from .delete_remote_files import delete_remote_files
 from .handle_local_files import handle_local_files
 from .local_files_info import get_local_files_info
@@ -20,13 +22,13 @@ def sync_files(
     """
     try:
         remote_info = connector.get_info()
-    except Exception as e:
+    except exceptions.HTTPError as e:
         logger.error(f"Ошибка получения информации из облака: {e}")
         return None
 
     try:
         local_info = get_local_files_info(local_path)
-    except Exception as e:
+    except FileNotFoundError as e:
         logger.error(f"Ошибка получения информации о файлах в локальном хранилище: {e}")
         return None
 
