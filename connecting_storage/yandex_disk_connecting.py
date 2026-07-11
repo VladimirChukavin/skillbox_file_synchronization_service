@@ -59,6 +59,7 @@ class YandexDiskConnector:
         url = f"{self.BASE_URL}/upload?path=app:/{self._folder_name}/{filename}&overwrite=true"
         response = self._session.get(url, timeout=30)
         response.raise_for_status()
+
         return response.json()["href"]
 
     def get_info(self) -> dict[str, str]:
